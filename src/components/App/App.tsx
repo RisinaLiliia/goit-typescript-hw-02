@@ -22,7 +22,6 @@ const App: React.FC = () => {
   const handleSearchSubmit = (query: string) => {
     if (!query.trim()) return;
 
-
     localStorage.setItem(STORAGE_KEY, query);
 
     dispatch(resetImages());
@@ -60,7 +59,7 @@ const App: React.FC = () => {
       if (totalImages > 0) {
         toast.success(`Found ${totalImages} images.`);
       } else {
-        toast.error('Unfortunately, no images found.');
+        // Убрали вывод при первой загрузке
       }
     }
 
@@ -73,6 +72,13 @@ const App: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ padding: '2rem' }}>
+      <Typography variant="h3" align="center" gutterBottom>
+        Image Search App
+      </Typography>
+      <Typography variant="subtitle1" align="center" color="text.secondary" gutterBottom>
+        Find beautiful and high-quality images with ease
+      </Typography>
+
       <SearchBar onSubmit={handleSearchSubmit} />
 
       <Box sx={{ marginTop: '2rem' }}>
