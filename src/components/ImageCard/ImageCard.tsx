@@ -9,7 +9,7 @@ interface ImageCardProps {
 
 const ImageCard: React.FC<ImageCardProps> = ({ image }) => {
   const { urls, user, likes } = image;
-  const { name, username } = user || {}; // Извлекаем имя и username автора
+  const { name, username } = user || {}; 
 
   return (
     <Card>

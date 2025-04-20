@@ -21,12 +21,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, loading, error }) =
     setSelectedImage(null);
   };
 
-  // Показываем компонент Loading, если идет загрузка и нет изображений
+
   if (loading && images.length === 0) {
     return <Loading />;
   }
 
-  // Показываем компонент Error, если есть ошибка
   if (error) {
     return <Error message={error} />;
   }

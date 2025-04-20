@@ -1,4 +1,4 @@
-import { UnsplashImage } from "../../unsplashAPI";
+import { UnsplashImage } from "../../api/fetchImages";
 
 export interface ImageModalProps {
   isOpen: boolean;

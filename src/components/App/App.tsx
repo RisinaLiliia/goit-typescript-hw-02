@@ -22,7 +22,7 @@ const App: React.FC = () => {
   const handleSearchSubmit = (query: string) => {
     if (!query.trim()) return;
 
-    // Сохраняем запрос в localStorage
+
     localStorage.setItem(STORAGE_KEY, query);
 
     dispatch(resetImages());
