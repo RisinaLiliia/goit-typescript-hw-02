@@ -53,7 +53,7 @@ export const fetchImages = async (query: string, page: number) => {
 
     return {
       images: response.data.results,
-      totalImages: response.data.total, 
+      totalImages: response.data.total,
     };
   } catch (error) {
     const axiosError = error as AxiosError<AxiosErrorResponse>;

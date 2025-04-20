@@ -3,24 +3,20 @@ import { Box } from '@mui/material';
 import ImageCard from '../ImageCard/ImageCard';
 import ImageModal from '../ImageModal/ImageModal';
 import { UnsplashImage } from '../../api/fetchImages';
-import { ImageGalleryProps } from '../ImageGallery/ImageGallery.types';
+import { ImageGalleryProps } from './ImageGallery.types';
 import Loading from '../Loader/Loader'; 
 import Error from '../ErrorMessage/ErrorMessage'; 
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images, loading, error }) => {
   const [selectedImage, setSelectedImage] = useState<UnsplashImage | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleImageClick = (image: UnsplashImage) => {
-    setSelectedImage(image);
-    setIsModalOpen(true);
+    setSelectedImage(image); 
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedImage(null);
+    setSelectedImage(null); 
   };
-
 
   if (loading && images.length === 0) {
     return <Loading />;
@@ -47,7 +43,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, loading, error }) =
 
       {selectedImage && (
         <ImageModal
-          isOpen={isModalOpen}
+          isOpen={Boolean(selectedImage)}  
           onClose={handleCloseModal}
           image={selectedImage}
         />
@@ -57,4 +53,5 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, loading, error }) =
 };
 
 export default ImageGallery;
+
 

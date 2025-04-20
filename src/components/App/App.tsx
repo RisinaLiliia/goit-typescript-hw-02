@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+
+import React, { useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchImagesAsync } from '../../store/imagesAction';
 import { resetImages, setSearchQuery, setPage } from '../../store/imagesSlice';
@@ -7,6 +8,7 @@ import { Box, Container, CircularProgress, Typography, Button } from '@mui/mater
 import SearchBar from '../SearchBar/SearchBar';
 import ImageGallery from '../ImageGallery/ImageGallery';
 import { Toaster, toast } from 'react-hot-toast';
+import EmptyState from '../EmptyState/EmptyState';
 
 const STORAGE_KEY = 'lastSearchQuery';
 
@@ -19,15 +21,24 @@ const App: React.FC = () => {
   const prevImagesCount = useRef(0);
   const isFirstRender = useRef(true);
 
+  const isInitialLoading = loading && images.length === 0;
+  const canLoadMore = images.length > 0 && !loading && images.length < totalImages;
+
+  const loadImages = useCallback(
+    (query: string, page: number) => {
+      dispatch(setSearchQuery(query));
+      dispatch(setPage(page));
+      dispatch(fetchImagesAsync({ query, page }));
+    },
+    [dispatch]
+  );
+
   const handleSearchSubmit = (query: string) => {
     if (!query.trim()) return;
 
     localStorage.setItem(STORAGE_KEY, query);
-
     dispatch(resetImages());
-    dispatch(setSearchQuery(query));
-    dispatch(setPage(1));
-    dispatch(fetchImagesAsync({ query, page: 1 }));
+    loadImages(query, 1);
   };
 
   const handleLoadMore = () => {
@@ -39,11 +50,10 @@ const App: React.FC = () => {
   useEffect(() => {
     const savedQuery = localStorage.getItem(STORAGE_KEY);
     if (savedQuery) {
-      dispatch(setSearchQuery(savedQuery));
-      dispatch(setPage(1));
-      dispatch(fetchImagesAsync({ query: savedQuery, page: 1 }));
+      dispatch(resetImages());
+      loadImages(savedQuery, 1);
     }
-  }, [dispatch]);
+  }, [dispatch, loadImages]);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -51,27 +61,21 @@ const App: React.FC = () => {
       return;
     }
 
-    if (!loading && error) {
-      toast.error(`Error: ${error}`);
-    }
-
-    if (!loading && page === 1) {
-      if (totalImages > 0) {
+    if (!loading) {
+      if (error) {
+        toast.error(`Error: ${error}`);
+      } else if (page === 1 && totalImages > 0) {
         toast.success(`Found ${totalImages} images.`);
-      } else {
-        // Убрали вывод при первой загрузке
+      } else if (page > 1 && images.length > prevImagesCount.current) {
+        toast.success(`Loaded ${images.length} of ${totalImages} images`);
       }
-    }
-
-    if (!loading && page > 1 && images.length > prevImagesCount.current) {
-      toast.success(`Loaded ${images.length} of ${totalImages} images`);
     }
 
     prevImagesCount.current = images.length;
   }, [loading, error, totalImages, images.length, page]);
 
   return (
-    <Container maxWidth="lg" sx={{ padding: '2rem' }}>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h3" align="center" gutterBottom>
         Image Search App
       </Typography>
@@ -81,32 +85,32 @@ const App: React.FC = () => {
 
       <SearchBar onSubmit={handleSearchSubmit} />
 
-      <Box sx={{ marginTop: '2rem' }}>
-        <ImageGallery
-          images={images}
-          loading={loading}
-          error={error}
-          totalImages={totalImages}
-        />
+      <Box sx={{ mt: 4 }}>
+        {images.length === 0 && !loading ? (
+          <EmptyState />
+        ) : (
+          <ImageGallery
+            images={images}
+            loading={loading}
+            error={error}
+            totalImages={totalImages}
+          />
+        )}
       </Box>
 
-      {loading && images.length === 0 && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+      {isInitialLoading && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
           <CircularProgress />
         </Box>
       )}
 
-      {images.length > 0 && !loading && images.length < totalImages && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+      {canLoadMore && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
           <Button
             variant="contained"
             onClick={handleLoadMore}
             disabled={loading}
-            sx={{
-              padding: '0.5rem 2rem',
-              fontSize: '1rem',
-              textTransform: 'none',
-            }}
+            sx={{ px: 4, py: 1, fontSize: '1rem', textTransform: 'none' }}
           >
             Load More
           </Button>
@@ -114,7 +118,7 @@ const App: React.FC = () => {
       )}
 
       {error && (
-        <Box sx={{ marginTop: '2rem', textAlign: 'center' }}>
+        <Box sx={{ mt: 4, textAlign: 'center' }}>
           <Typography variant="body1" color="error">
             {error}
           </Typography>
@@ -127,25 +131,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

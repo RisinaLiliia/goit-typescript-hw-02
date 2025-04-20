@@ -7,11 +7,13 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
   const [query, setQuery] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
+  
+ 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim()) {
-      onSubmit(query);
+      onSubmit(query); 
+      setQuery(''); 
     }
   };
 
@@ -23,6 +25,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         fullWidth
+        autoFocus 
+        required
       />
       <Button type="submit" variant="contained" sx={{ marginLeft: 2 }}>
         Search
@@ -32,6 +36,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
 };
 
 export default SearchBar;
+
 
 
 

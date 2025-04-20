@@ -16,11 +16,11 @@ const ImageCard: React.FC<ImageCardProps> = ({ image }) => {
       <CardMedia
         component="img"
         height="200"
-        image={urls.regular || ''} 
-        alt="Image from Unsplash" 
+        image={urls?.regular || 'default-image-url'} 
+        alt="Image from Unsplash"
       />
       <CardContent>
-        {user && (
+        {user ? (
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Typography variant="body2" color="textSecondary">
               Photo by{' '}
@@ -36,10 +36,14 @@ const ImageCard: React.FC<ImageCardProps> = ({ image }) => {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <FavoriteIcon sx={{ color: 'red', fontSize: '16px', marginRight: '4px' }} />
               <Typography variant="body2" color="textSecondary">
-                {likes}
+                {likes || 0}
               </Typography>
             </Box>
           </Box>
+        ) : (
+          <Typography variant="body2" color="textSecondary">
+            No author information available
+          </Typography>
         )}
       </CardContent>
     </Card>
@@ -47,6 +51,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ image }) => {
 };
 
 export default ImageCard;
+
 
 
 
