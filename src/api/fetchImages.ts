@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { UnsplashImage } from '../types/unsplash';
+import { UnsplashImage } from '../types/unsplash'; 
 
 const ACCESS_KEY = 'KAtpeeUxFJUDvLn_17eHahUdF33DUJo0V_POBIGTUrM';
 const BASE_URL = 'https://api.unsplash.com/search/photos';
@@ -8,6 +8,7 @@ interface FetchImagesResponse {
   results: UnsplashImage[];
   total: number;
 }
+
 
 export const fetchImages = async (query: string, page: number) => {
   try {
@@ -34,6 +35,7 @@ export const fetchImages = async (query: string, page: number) => {
     throw new Error('Unexpected error fetching images');
   }
 };
+
 
 
 
