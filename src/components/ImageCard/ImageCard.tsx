@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardMedia, Card, CardContent, Typography, Box } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { UnsplashImage } from '../../api/fetchImages';
+import { UnsplashImage } from '../../types/unsplash';
 
 interface ImageCardProps {
   image: UnsplashImage;
@@ -9,14 +9,14 @@ interface ImageCardProps {
 
 const ImageCard: React.FC<ImageCardProps> = ({ image }) => {
   const { urls, user, likes } = image;
-  const { name, username } = user || {}; 
+  const { name, username } = user || {};
 
   return (
     <Card>
       <CardMedia
         component="img"
         height="200"
-        image={urls?.regular || 'default-image-url'} 
+        image={urls?.regular || '/placeholder.jpg'} // Изменил на fallback путь
         alt="Image from Unsplash"
       />
       <CardContent>
@@ -51,6 +51,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ image }) => {
 };
 
 export default ImageCard;
+
 
 
 

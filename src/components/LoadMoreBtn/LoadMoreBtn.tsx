@@ -1,6 +1,5 @@
-import { Button } from "@mui/material";
-import { LoadMoreBtnProps } from "./LoadMoreBtn.types"; 
-
+import { Button } from '@mui/material';
+import { LoadMoreBtnProps } from './LoadMoreBtn.types';
 
 const LoadMoreBtn: React.FC<LoadMoreBtnProps> = ({ onClick, disabled }) => {
   return (
@@ -10,6 +9,6 @@ const LoadMoreBtn: React.FC<LoadMoreBtnProps> = ({ onClick, disabled }) => {
   );
 };
 
-
 export default LoadMoreBtn;
+
 

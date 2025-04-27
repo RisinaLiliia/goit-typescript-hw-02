@@ -1,22 +1,18 @@
-
 import React, { useEffect, useRef, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchImagesAsync } from '../../store/imagesAction';
-import { resetImages, setSearchQuery, setPage } from '../../store/imagesSlice';
-import { AppDispatch, RootState } from '../../store/store';
 import { Box, Container, CircularProgress, Typography, Button } from '@mui/material';
+import { Toaster, toast } from 'react-hot-toast';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { resetImages, setSearchQuery, setPage } from '../../store/imagesSlice';
+import { fetchImagesAsync } from '../../store/imagesAction';
 import SearchBar from '../SearchBar/SearchBar';
 import ImageGallery from '../ImageGallery/ImageGallery';
-import { Toaster, toast } from 'react-hot-toast';
 import EmptyState from '../EmptyState/EmptyState';
 
 const STORAGE_KEY = 'lastSearchQuery';
 
 const App: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { images, loading, error, page, searchQuery, totalImages } = useSelector(
-    (state: RootState) => state.images
-  );
+  const dispatch = useAppDispatch();
+  const { images, loading, error, page, searchQuery, totalImages } = useAppSelector((state) => state.images);
 
   const prevImagesCount = useRef(0);
   const isFirstRender = useRef(true);
@@ -98,18 +94,17 @@ const App: React.FC = () => {
         )}
       </Box>
 
-      {isInitialLoading && (
+      {(isInitialLoading || loading) && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
           <CircularProgress />
         </Box>
       )}
 
-      {canLoadMore && (
+      {canLoadMore && !loading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
           <Button
             variant="contained"
             onClick={handleLoadMore}
-            disabled={loading}
             sx={{ px: 4, py: 1, fontSize: '1rem', textTransform: 'none' }}
           >
             Load More
@@ -117,6 +112,7 @@ const App: React.FC = () => {
         </Box>
       )}
 
+ 
       {error && (
         <Box sx={{ mt: 4, textAlign: 'center' }}>
           <Typography variant="body1" color="error">
@@ -131,3 +127,5 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+

@@ -1,7 +1,6 @@
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchImagesAsync } from './imagesAction';
-import { UnsplashImage } from '../api/fetchImages';
+import { UnsplashImage } from '../types/unsplash';
 
 interface ImagesState {
   images: UnsplashImage[];
@@ -42,25 +41,23 @@ const imagesSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(
-        fetchImagesAsync.fulfilled,
-        (state, action: PayloadAction<{ images: UnsplashImage[]; totalImages: number }>) => {
-          state.loading = false;
-          state.images =
-            state.page === 1
-              ? action.payload.images
-              : [...state.images, ...action.payload.images];
-          state.totalImages = action.payload.totalImages;
-        }
-      )
+      .addCase(fetchImagesAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.images =
+          state.page === 1
+            ? action.payload.images
+            : [...state.images, ...action.payload.images];
+        state.totalImages = action.payload.totalImages;
+      })
       .addCase(fetchImagesAsync.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.payload ?? 'Unknown error';
       });
   },
 });
 
 export const { resetImages, setSearchQuery, setPage } = imagesSlice.actions;
 export default imagesSlice.reducer;
+
 
 

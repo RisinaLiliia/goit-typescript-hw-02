@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search'; // Добавляем иконку
 
 interface SearchBarProps {
   onSubmit: (query: string) => void;
@@ -7,13 +8,12 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
   const [query, setQuery] = useState('');
-  
- 
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim()) {
-      onSubmit(query); 
-      setQuery(''); 
+      onSubmit(query);
+      setQuery('');
     }
   };
 
@@ -25,10 +25,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         fullWidth
-        autoFocus 
+        autoFocus
         required
       />
-      <Button type="submit" variant="contained" sx={{ marginLeft: 2 }}>
+      <Button type="submit" variant="contained" sx={{ marginLeft: 2 }} startIcon={<SearchIcon />}>
         Search
       </Button>
     </Box>

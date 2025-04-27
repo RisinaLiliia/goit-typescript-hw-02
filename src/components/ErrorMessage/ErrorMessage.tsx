@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography } from '@mui/material';
 
 interface ErrorMessageProps {
   message: string;
@@ -13,7 +13,7 @@ const ErrorMessage = ({ message }: ErrorMessageProps) => {
         marginTop: 2,
         padding: 1,
         borderRadius: 1,
-        backgroundColor: "rgba(255, 0, 0, 0.1)",
+        backgroundColor: 'rgba(255, 0, 0, 0.1)',
       }}
     >
       {message}
@@ -22,5 +22,6 @@ const ErrorMessage = ({ message }: ErrorMessageProps) => {
 };
 
 export default ErrorMessage;
+
 
 

@@ -8,10 +8,10 @@ import {
   Avatar,
   Link,
   Stack,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { UnsplashImage } from "../../api/fetchImages";
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { UnsplashImage } from '../../types/unsplash';
 
 interface Props {
   isOpen: boolean;
@@ -30,9 +30,9 @@ const ImageModal = ({ isOpen, onClose, image }: Props) => {
         sx={{
           m: 0,
           p: 2,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}
       >
         <IconButton
@@ -48,22 +48,21 @@ const ImageModal = ({ isOpen, onClose, image }: Props) => {
         <Box
           component="img"
           src={urls.regular}
-          alt={alt_description || "Unsplash Image"}
+          alt={alt_description || 'Unsplash Image'}
           sx={{
-            width: "100%",
+            width: '100%',
             borderRadius: 2,
             mb: 2,
             boxShadow: 2,
-            objectFit: "cover",
+            objectFit: 'cover',
           }}
         />
 
-    {alt_description && (
-  <Typography variant="body2" sx={{ fontStyle: "italic", mb: 2 }}>
-    {alt_description.charAt(0).toUpperCase() + alt_description.slice(1)}
-  </Typography>
-)}
-
+        {alt_description && (
+          <Typography variant="body2" sx={{ fontStyle: 'italic', mb: 2 }}>
+            {alt_description.charAt(0).toUpperCase() + alt_description.slice(1)}
+          </Typography>
+        )}
 
         <Stack direction="row" alignItems="center" spacing={1} mb={1}>
           {user.profile_image?.small && (
@@ -95,6 +94,7 @@ const ImageModal = ({ isOpen, onClose, image }: Props) => {
 };
 
 export default ImageModal;
+
 
 
 

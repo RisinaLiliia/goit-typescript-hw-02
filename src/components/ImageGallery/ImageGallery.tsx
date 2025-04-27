@@ -2,24 +2,24 @@ import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import ImageCard from '../ImageCard/ImageCard';
 import ImageModal from '../ImageModal/ImageModal';
-import { UnsplashImage } from '../../api/fetchImages';
+import { UnsplashImage } from '../../types/unsplash';
 import { ImageGalleryProps } from './ImageGallery.types';
-import Loading from '../Loader/Loader'; 
-import Error from '../ErrorMessage/ErrorMessage'; 
+import Loader from '../Loader/Loader';
+import Error from '../ErrorMessage/ErrorMessage';
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images, loading, error }) => {
   const [selectedImage, setSelectedImage] = useState<UnsplashImage | null>(null);
 
   const handleImageClick = (image: UnsplashImage) => {
-    setSelectedImage(image); 
+    setSelectedImage(image);
   };
 
   const handleCloseModal = () => {
-    setSelectedImage(null); 
+    setSelectedImage(null);
   };
 
   if (loading && images.length === 0) {
-    return <Loading />;
+    return <Loader />;
   }
 
   if (error) {
@@ -43,7 +43,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, loading, error }) =
 
       {selectedImage && (
         <ImageModal
-          isOpen={Boolean(selectedImage)}  
+          isOpen={Boolean(selectedImage)}
           onClose={handleCloseModal}
           image={selectedImage}
         />
@@ -53,5 +53,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, loading, error }) =
 };
 
 export default ImageGallery;
+
 
 
