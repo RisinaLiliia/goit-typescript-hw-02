@@ -1,15 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchImagesAsync } from './imagesAction';
-import { UnsplashImage } from '../types/unsplash';
+import { ImagesState } from './imagesTypes';
 
-interface ImagesState {
-  images: UnsplashImage[];
-  loading: boolean;
-  error: string | null;
-  searchQuery: string;
-  page: number;
-  totalImages: number;
-}
 
 const initialState: ImagesState = {
   images: [],
@@ -58,6 +50,5 @@ const imagesSlice = createSlice({
 
 export const { resetImages, setSearchQuery, setPage } = imagesSlice.actions;
 export default imagesSlice.reducer;
-
 
 

@@ -1,4 +1,5 @@
-import { UnsplashImage } from '../types/unsplash';
+
+import { UnsplashImage } from '../types/unsplash';  
 
 export interface ImagesState {
   images: UnsplashImage[];
@@ -8,3 +9,4 @@ export interface ImagesState {
   page: number;
   totalImages: number; 
 }
+
