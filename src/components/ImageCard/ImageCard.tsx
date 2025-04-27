@@ -16,7 +16,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ image }) => {
       <CardMedia
         component="img"
         height="200"
-        image={urls?.regular || '/placeholder.jpg'} // Изменил на fallback путь
+        image={urls?.regular || '/placeholder.jpg'} 
         alt="Image from Unsplash"
       />
       <CardContent>

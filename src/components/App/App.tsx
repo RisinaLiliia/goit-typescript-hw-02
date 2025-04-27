@@ -112,7 +112,6 @@ const App: React.FC = () => {
         </Box>
       )}
 
- 
       {error && (
         <Box sx={{ mt: 4, textAlign: 'center' }}>
           <Typography variant="body1" color="error">
@@ -127,5 +126,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-
